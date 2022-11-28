@@ -14,7 +14,7 @@ class New extends React.Component {
                         Entry: <input type="textentry" name="entry" />
                         <br />
                         <br />
-                        Ship Is Broken: <input type="checkbox" name="ship is broken"/>
+                        Ship Is Broken: <input type="checkbox" name="shipIsBroken"/>
                         <br />
                         <br />
                         <input type="Submit" value="submit"/>
