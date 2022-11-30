@@ -9,11 +9,11 @@ class New extends React.Component {
                 <body>
 
                     <h1> This is the new Captain Log app</h1>
-                    <form action="/logs/" method="POST">
+                    <form action="/" method="POST">
                         Title: <input type="text" name="title" />
                         <br />
                         <br />
-                        Entry: <input type="textentry" name="entry" />
+                        Entry: <input type="textarea" name="entry" />
                         <br />
                         <br />
                         Ship Is Broken: <input type="checkbox" name="shipIsBroken"/>
