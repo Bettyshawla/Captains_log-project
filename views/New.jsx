@@ -1,9 +1,11 @@
 const React = require("react")
+const DefaultLayout = require("./layout/Default")
+
 
 class New extends React.Component {
     render() {
         return (
-            <div>
+            <DefaultLayout>
                 <body>
 
                     <h1> This is the new Captain Log app</h1>
@@ -20,7 +22,7 @@ class New extends React.Component {
                         <input type="Submit" value="submit"/>
                     </form>
                 </body>
-            </div>
+            </DefaultLayout>
         )
     }
 }

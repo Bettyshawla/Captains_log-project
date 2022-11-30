@@ -4,8 +4,13 @@ const app = express();
 const PORT = 3000;
 const reactView = require("express-react-views");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 // const Logs = require("./models/logs")
-const mongoose = require("mongoose")
+const methodOverride = require('method-override');
+const logsController = require("./controllers/logController")
+
+
+
 
 // ============= Mongoose =============
 mongoose.connect(process.env.MONGO_URI, {
@@ -16,15 +21,19 @@ mongoose.connect(process.env.MONGO_URI, {
     console.log("connected to mongo")
   })
 
+
 // =============  Engine =============
+// app.set("views", "./views")
 app.set("view engine", "jsx")
+
 app.engine("jsx", reactView.createEngine())
 
 // ============= Middle Ware =============
 // body-parser
 // these two middle ware will help us get the data from the input field
+
+
 app.use(bodyParser.urlencoded({ extended: false }))
-// parse app/json
 app.use(bodyParser.json())
 
 app.use((req, res, next) => {
@@ -33,29 +42,21 @@ app.use((req, res, next) => {
     next()
 })
 
+app.use(express.urlencoded({extended: false}))
+app.use(methodOverride("_method"))
+app.use(express.static('public'));
+console.log('css')
 
-// ============= Routes =============
-app.get('/', (req, res) => {
-    res.send("<h1>Welcome to the Captains Log App!</h1>")
-})
+// // ===== Routes =====
+app.use("/logs", logsController)
+
+
 
 // ============= New Route =============
 app.get('/logs/new', (req, res) => {
     console.log("2. controller")
     res.render('New')
 })
-
-app.post("/logs/", (req, res) => {
-    if (req.body.shipIsBroken === "on") {
-        req.body.shipIsBroken = true;
-    } else {
-        req.body.shipIsBroken = false;
-    }
-    // res.send(req.body)
-    res.redirect("/logs/ShowPage") //Come back to it after Show is created
-
-});
-
 
 // ============= Listening PORT =============
 app.listen(PORT, () => {
