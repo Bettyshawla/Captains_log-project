@@ -4,6 +4,7 @@ const DefaultLayout = require("./Layouts/Default");
 class Show extends React.Component {
     render() {
         const { title, entry, shipIsBroken, createdAt } = this.props
+
         return (
             <DefaultLayout>
             <div>
@@ -11,9 +12,13 @@ class Show extends React.Component {
                 <br /><br />
 
                 <h2>{title}</h2>
+                <br />
+                <br />
                 <p>{entry}</p>
                 <br />
-                <p className="italic">{shipIsBroken ? "Ship maintenance required." : "The Ship is fine"}</p><br />
+                <br />
+                <p>{shipIsBroken ? "Ship maintenance required" : "The Ship is fine"}</p>
+                <br/>
 
                 <a href={`/logs/${this.props.log._id}/edit`}><button type="button">Edit Log</button></a>
             </div>

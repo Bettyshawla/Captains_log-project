@@ -61,16 +61,6 @@ router.post("/", (req, res) => {
 
 //  ============ Edit ============
 router.get("/:id/edit", (req, res) => {
-    const id = req.params.id;
-
-    // Log.findById(id)
-    // .then((logs) => {
-    //     res.render("logs/Edit.jsx", { logs })
-    // }) 
-    // .catch((error) => {
-    //     console.log(error)
-    //     res.json({ error })
-    // })
     
     Log.findById(req.params.id, (error, foundLog) => {
         if(!error) {
@@ -80,6 +70,23 @@ router.get("/:id/edit", (req, res) => {
         }
     });
 });
+
+// router.get("/:id/edit", (req, res) => {
+//     // get the id from params
+//     const id = req.params.id;
+//     console.log(req.params.id, "CLG OF THE RPI")
+//     // get the fruit from the database
+//     Log.findById(id)
+//         .then((logs) => {
+//             // render Edit page and send fruit data
+//             res.render("logs/Edit.jsx", { logs });
+//         })
+//         // send error as json
+//         .catch((error) => {
+//             console.log(error);
+//             res.json({ error });
+//         });
+// });
 
 
 //   ============ Show ============
