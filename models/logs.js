@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 
-const logsSchema = new mongoose.Schema({
-    Tilte: { type: String, required: true },
-    Entry:  { type: String, required: true },
+const logsSchema = new Schema({
+    title: { type: String, required: true },
+    entry:  { type: String, required: true },
     shipIsBroken: { type: Boolean }
 },
 {
@@ -10,7 +11,7 @@ const logsSchema = new mongoose.Schema({
 })
 
 
-const Log = mongoose.model("Logs", logsSchema);
+const Log = model("Logs", logsSchema);
 
 
 module.exports = Log; 

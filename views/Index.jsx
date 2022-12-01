@@ -1,5 +1,5 @@
 const React = require("react")
-const DefaultLayout = require("./layout/Default")
+const DefaultLayout = require("./Layouts/Default")
 
 class Index extends React.Component {
     render() {
@@ -18,8 +18,6 @@ class Index extends React.Component {
                         logs.map((log, i) => {
                             return (
                                 <li>
-
-
                                     <a href={`/logs/${log._id}`}>{log.title}</a><br />
                                     <form action={`/logs/${log._id}?_method=DELETE`} method="POST">
                                         <input type="submit" value="DELETE" />
@@ -33,7 +31,6 @@ class Index extends React.Component {
                 </ul>
 
             </DefaultLayout>
-
         )
     }
 }

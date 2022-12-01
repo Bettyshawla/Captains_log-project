@@ -1,73 +1,100 @@
-// const express = require("express")
-// const router = express.Router()
-// const Logs = require("../models/logs")
+const express = require("express");
+const router  = express.Router();
+const Log     = require("../models/logs");
 
 
-// // // ============= Index Route =============
+//  ============ Index ============== 
+
+router.get("/", (req, res) => {
+    Log.find({}, (error, allLogs) => {
+        if(!error) {
+            res.status(200).render("Index", {
+                logs: allLogs
+            });
+        } else {
+            res.status(400).send(error);
+        }
+    })
+});
 
 
-// app.get('/', (req, res) => {
-//     Logs.find({}, (err, allLogs) => {
-//         if(!err) {
-//             res.status(200).render('Index', {
-//                 logs: allLogs
-//             })
-//         } else {
-//             res.status(400).send(err)
-//         }
-//     })
-// })
+// ============ New ============
+router.get("/new", (req, res) => {
+    res.render("New");
+});
 
 
-
-// // ============= New Route =============
-// app.get('/logs/new', (req, res) => {
-//     console.log("2. controller")
-//     res.render('New')
-// })
-
-
-// //  CREATE
-// app.post("/logs", (req, res) => {
-//     if (req.body.shipIsBroken === "on") {
-//         req.body.shipIsBroken = true;
-//     } else {
-//         req.body.shipIsBroken = false;
-//     }
-//     // res.send(req.body)
-
-//     Logs.create(req.body, (error, createdLogs) => {
-//     if (!error) {
-//       // redirects after creating fruit, to the Index page
-//       res.status(200).redirect("/logs")
-//     } else {
-//       res.status(400).send(error)
-//     }
-//   })
-
-//     // res.redirect("/logs/show") //Come back to it after Show is created
-
-// });
+// ============ Delete ============
+router.delete("/:id", (req, res) => {
+    Log.findByIdAndDelete(req.params.id, (error, data) => {
+        res.redirect("/logs");
+    })
+});
 
 
+//  ============ Update ============
+router.put("/:id", (req, res) => {
+    req.body.shipIsBroken = req.body.shipIsBroken === "on" ? true : false;
+    Log.findByIdAndUpdate(req.params.id, req.body, (error, updatedLog) => {
+        if(!error) {
+            res.status(200).redirect(`/logs/${req.params.id}`); // Redirect to Index Page
+        } else {
+            res.status(400).send(error);
+        }
+    })
+});
 
 
-// router.get("/:id", (req, res) => {
+//   ============ Create ============
+router.post("/", (req, res) => {
+    req.body.shipIsBroken = req.body.shipIsBroken === "on" ? true : false;
 
-//     Logs.findById(req.params.id, (error, foundLog) => {
-//     if (!error) {
-//       res
-//         .status(200)
-//         .render("logs/Show", {
-//           logs: foundLog
-//         })
-//     } else {
-//       res
-//         .status(400)
-//         .send(error)
-//     }
-//   })
-// })
+    Log.create(req.body, (error, createdLog) => {
+        if(!error) {
+            res.status(200).redirect(`/logs/${createdLog._id.valueOf()}`);  // Redirect to Show route
+        } else {
+            res.status(400).send(error);
+        }
+    })
+});
 
 
-// module.exports = router
+//  ============ Edit ============
+router.get("/:id/edit", (req, res) => {
+    const id = req.params.id;
+
+    // Log.findById(id)
+    // .then((logs) => {
+    //     res.render("logs/Edit.jsx", { logs })
+    // }) 
+    // .catch((error) => {
+    //     console.log(error)
+    //     res.json({ error })
+    // })
+    
+    Log.findById(req.params.id, (error, foundLog) => {
+        if(!error) {
+            res.status(200).render("Edit", {log: foundLog});
+        } else {
+            res.status(400).send({ msg: error.message });
+        }
+    });
+});
+
+
+//   ============ Show ============
+
+router.get("/:id", (req, res) => {
+    Log.findById(req.params.id, (error, foundLog) => {
+        if(!error) {
+            res.status(200).render("Show", {
+                log: foundLog
+            });
+        } else {
+            res.status(400).send(error);
+        }
+    });
+});
+
+
+module.exports = router;
