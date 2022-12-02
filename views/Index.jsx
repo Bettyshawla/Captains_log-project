@@ -1,6 +1,7 @@
 const React = require("react")
 const DefaultLayout = require("./Layouts/Default")
 
+
 class Index extends React.Component {
     render() {
         const { logs } = this.props
